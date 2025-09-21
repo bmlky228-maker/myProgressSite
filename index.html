@@ -3,90 +3,156 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>قبول روليت ببطء</title>
+    <title>قبول روليت</title>
     <style>
         body {
-            font-family: Arial;
+            font-family: Arial, sans-serif;
             background: #0b1220;
             color: white;
             padding: 20px;
         }
 
-        .progress-container {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            overflow: hidden;
-            height: 50px;
-            margin: 20px 0;
-        }
-
-        .progress-bar {
-            height: 100%;
-            width: 0;
-            background: #0f85ff;
-            transition: width 0.3s;
-        }
-
-        .percent-text {
-            position: absolute;
-            width: 100%;
-            text-align: center;
-            line-height: 50px;
-            font-weight: bold;
+        select,
+        button {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
         }
 
         .card {
             background: rgba(255, 255, 255, 0.05);
             padding: 15px;
             border-radius: 10px;
+            margin-top: 15px;
             max-height: 400px;
             overflow-y: auto;
-            display: none;
-            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: right;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
 
 <body>
-    <h2>مرحلة الانفتاح للقبولات</h2>
+    <h2>موقع عرض قبول روليت</h2>
 
-    <div class="progress-container">
-        <div class="progress-bar" id="bar"></div>
-        <div class="percent-text" id="text">0%</div>
-    </div>
+    <label>اختر الروليت:</label>
+    <select id="provinceSelect">
+        <option value="">-- اختر --</option>
+    </select>
 
-    <div id="results" class="card">
-        <h2>موقع عرض قبول روليت</h2>
-        <label>اختر الروليت:</label>
-        <select id="provinceSelect">
-            <option value="">-- اختر --</option>
-        </select>
-        <label>اختر الحرف:</label>
-        <select id="schoolSelect">
-            <option value="">-- اختر --</option>
-        </select>
-        <div id="resultsTable" class="card"></div>
-    </div>
+    <label>اختر الحرف:</label>
+    <select id="schoolSelect">
+        <option value="">-- اختر --</option>
+    </select>
+
+    <div id="results" class="card"></div>
 
     <script>
-        // بيانات الطلاب
+        // قاعدة بيانات كاملة (أسماء كاملة مثال)
         const data = {
-            "روليت_أ": { "أ": [{ name: "جعفر", exam: "8479", result: "قبول" }, { name: "امير", exam: "4758", result: "قبول" }] },
-            "روليت_ب": { "ب": [{ name: "مالك", exam: "3759", result: "قبول" }, { name: "ياسين", exam: "3759", result: "قبول" }] }
+            "روليت_أ": {
+                "أ": [
+                    { name: "جعفر", exam: "8479", result: "قبول" },
+                    { name: "امير", exam: "4758", result: "قبول" },
+                    { name: "جاسم", exam: "4895", result: "قبول" },
+                    { name: "حسن", exam: "8574", result: "قبول" },
+                    { name: "قاسم", exam: "7846", result: "قبول" },
+                    { name: "انور", exam: "7944", result: "قبول" },
+                    { name: "صفاء", exam: "7482", result: "قبول" },
+                    { name: "هيثم", exam: "6489", result: "قبول" },
+                    { name: "رائد", exam: "8594", result: "قبول" },
+                    { name: "مازن", exam: "5739", result: "قبول" }
+                ]
+            },
+            "روليت_ب": {
+                "ب": [
+                    { name: "مالك", exam: "3759", result: "قبول" },
+                    { name: "ياسين", exam: "3759", result: "قبول" },
+                    { name: "سيف", exam: "4739", result: "قبول" },
+                    { name: "ايهاب", exam: "8374", result: "قبول" },
+                    { name: "جبر", exam: "0284", result: "قبول" },
+                    { name: "رسول", exam: "3875", result: "قبول" },
+                    { name: "مهند", exam: "2758", result: "قبول" },
+                    { name: "مرتضى", exam: "4859", result: "قبول" },
+                    { name: "أنس", exam: "4839", result: "قبول" },
+                    { name: "كاظم", exam: "3847", result: "قبول" },
+                ]
+            },
+            "روليت_ج": {
+                "ج": [
+                    { name: "زيد", exam: "7594", result: "قبول" },
+                    { name: "فلاح", exam: "3974", result: "قبول" },
+                    { name: "حمزه", exam: "2764", result: "قبول" },
+                    { name: "غيث", exam: "2784", result: "قبول" },
+                    { name: "ناصر", exam: "4758", result: "قبول" },
+                    { name: "نزار", exam: "4743", result: "قبول" },
+                    { name: "ياسين", exam: "3847", result: "قبول" },
+                    { name: "أحمد", exam: "4846", result: "قبول" },
+                    { name: "عمار", exam: "3747", result: "قبول" },
+                    { name: "نبراس", exam: "4748", result: "قبول" }
+                ]
+            },
+
+            "لايتم قبول": {
+                "لايتم قبول": [
+                    { name: "حيدر", exam: "0", result: "لايتم قبول" },
+                    { name: "فلاح", exam: "0", result: "لايتم قبول" },
+                    { name: "علي", exam: "0", result: "لايتم قبول" },
+                    { name: "حسين", exam: "0", result: "لايتم قبول" },
+                    { name: "مصطفى", exam: "0", result: "لايتم قبول" },
+                    { name: "يوسف", exam: "0", result: "لايتم قبول" },
+                    { name: "علي", exam: "0", result: "لايتم قبول" },
+                    { name: "سامي", exam: "0", result: "لايتم قبول" },
+                    { name: "خالد", exam: "0", result: "لايتم قبول" },
+                    { name: "جابر", exam: "0", result: "لايتم قبول" },
+                    { name: "وسام", exam: "0", result: "لايتم قبول" },
+                    { name: "قحطان", exam: "0", result: "لايتم قبول" },
+                    { name: "سعد", exam: "0", result: "لايتمن قبول" },
+                    { name: "علاء", exam: "0", result: "لايتم قبول" },
+                    { name: "ميثم", exam: "0", result: "لايتم قبول" },
+                    { name: "باسم", exam: "0", result: "لايتم قبول" },
+                    { name: "حسين", exam: "0", result: "لايتم قبول" },
+                    { name: "مصطفى", exam: "0", result: "لايتم قبول" },
+                    { name: "علي", exam: "0", result: "لايتم قبول" },
+                    { name: "كرار", exam: "0", result: "لايتم قبول" },
+                    { name: "يوسف", exam: "0", result: "لايتم قبول" },
+                    { name: "عباس", exam: "0", result: "لايتم قبول" }
+                ]
+            },
         };
 
-        // تحميل الروليت
+
         const provinceSelect = document.getElementById("provinceSelect");
         const schoolSelect = document.getElementById("schoolSelect");
-        const resultsTable = document.getElementById("resultsTable");
+        const resultsDiv = document.getElementById("results");
+
+        // تحميل الروليت
         Object.keys(data).forEach(prov => {
             let opt = document.createElement("option");
             opt.value = prov; opt.textContent = prov;
             provinceSelect.appendChild(opt);
         });
+
+        // عند اختيار الروليت
         provinceSelect.addEventListener("change", () => {
             schoolSelect.innerHTML = "<option value=''>-- اختر --</option>";
-            resultsTable.innerHTML = "";
+            resultsDiv.innerHTML = "";
             const letters = data[provinceSelect.value] || {};
             Object.keys(letters).forEach(letter => {
                 let opt = document.createElement("option");
@@ -94,31 +160,22 @@
                 schoolSelect.appendChild(opt);
             });
         });
-        schoolSelect.addEventListener("change", () => {
-            resultsTable.innerHTML = "";
-            const students = (data[provinceSelect.value] || {})[schoolSelect.value] || [];
-            if (students.length === 0) { resultsTable.innerHTML = "<p>لا توجد نتائج</p>"; return; }
-            let html = "<table><tr><th>الاسم</th><th>الرقم روليت</th><th>النتيجة</th></tr>";
-            students.forEach(st => { html += `<tr><td>${st.name}</td><td>${st.exam}</td><td>${st.result}</td></tr>`; });
-            html += "</table>";
-            resultsTable.innerHTML = html;
-        });
 
-        // تحريك الشريط ببطء شديد لمدة ساعة تقريبًا
-        const bar = document.getElementById("bar");
-        const text = document.getElementById("text");
-        let percent = 0;
-        // ساعة = 3600 ثانية = 3600*1000 مللي ثانية، هنا نقسم على 100 للحصول على تحديث لكل 36 ثانية
-        const interval = setInterval(() => {
-            percent++;
-            bar.style.width = percent + "%";
-            text.innerText = percent + "%";
-            if (percent >= 100) {
-                clearInterval(interval);
-                // اظهار النتائج عند اكتمال الشريط
-                document.getElementById("results").style.display = "block";
+        // عند اختيار الحرف
+        schoolSelect.addEventListener("change", () => {
+            resultsDiv.innerHTML = "";
+            const students = (data[provinceSelect.value] || {})[schoolSelect.value] || [];
+            if (students.length === 0) {
+                resultsDiv.innerHTML = "<p>لا توجد نتائج</p>";
+                return;
             }
-        }, 3); // تحديث كل 36 ثانية -> 100 * 36 = 3600 ثانية = ساعة
+            let html = "<table><tr><th>الاسم</th><th>الرقم روليت</th><th>النتيجة</th></tr>";
+            students.forEach(st => {
+                html += `<tr><td>${st.name}</td><td>${st.exam}</td><td>${st.result}</td></tr>`;
+            });
+            html += "</table>";
+            resultsDiv.innerHTML = html;
+        });
     </script>
 </body>
 
