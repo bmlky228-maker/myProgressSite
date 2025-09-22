@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>شريط تقدم بدون أرقام</title>
+    <title>شريط تقدم وفائزين</title>
     <style>
         body {
             background: linear-gradient(135deg, #141e30, #243b55);
@@ -14,6 +14,7 @@
             align-items: center;
             height: 100vh;
             color: white;
+            text-align: center;
         }
 
         .progress-box {
@@ -51,53 +52,64 @@
 </head>
 
 <body>
+    <h1>مرحلة الإظهار الفائزين</h1>
 
     <div class="progress-box">
-        <h2>مرحله الفوز </h2>
         <div class="progress-bar">
             <div class="progress-fill" id="progress"></div>
         </div>
-        <div class="status" id="status"></div>
-    </div>
-    <div class="progress-box">
-        <h2> مرحله التدقيق</h2>
-        <div class="progress-bar">
-            <div class="progress-fill" id="progress"></div>
-        </div>
-        <div class="status" id="status"></div>
-    </div>
-
-    <div class="progress-box">
-        <h2> مرحله الاضهار الفائزين</h2>
-        <div class="progress-bar">
-            <div class="progress-fill" id="progress"></div>
-        </div>
-        <div class="status" id="status"></div>
+        <div class="status" id="status">0%</div>
     </div>
 
     <script>
-        function startProgress(progressId, statusId, target, speed) {
-            let progress = document.getElementById(progressId);
-            let statusText = document.getElementById(statusId);
-            let width = 0;
-            let interval = setInterval(() => {
-                if (width >= target) {
-                    clearInterval(interval);
+        const progress = document.getElementById("progress");
+        const status = document.getElementById("status");
 
-                } else {
-                    width++;
-                    progress.style.width = width + "%";
-                }
-            }, speed);
+        let width = 0;
+        const totalTime = 60 * 1000; // دقيقة واحدة بالمللي ثانية
+        const intervalTime = 1000; // تحديث كل ثانية
+        const step = 100 / (totalTime / intervalTime); // نسبة الزيادة في كل ثانية
+
+        const interval = setInterval(() => {
+            if (width >= 100) {
+                clearInterval(interval);
+                showWinnersPage();
+            } else {
+                width += step;
+                if (width > 100) width = 100;
+                progress.style.width = width + "%";
+                status.innerText = Math.floor(width) + "%";
+            }
+        }, intervalTime);
+
+        function showWinnersPage() {
+            document.body.innerHTML = `
+            <h1>🎉 الفائزين 🔥</h1>
+            <div style="background: rgba(255,255,255,0.05); margin: 30px auto; padding:20px; border-radius:15px; max-width:700px; max-height:500px; overflow-y:auto; text-align:right; box-shadow:0 0 20px #ff9f00 inset;">
+                <ul id="namesList" style="list-style:none; padding:0; color:white; font-size:20px;"></ul>
+            </div>
+            `;
+            const winners = [
+                "جاسم", "ناصر", "ياسين", "زيد", "سامي",
+                "رائد", "عمار", "ميثم", "علاء", "حسن",
+                "مازن", "مالك", "أنور", "سيف", "غيث",
+                "أنس", "مهند", "نزار", "نبراس"
+            ];
+            const ul = document.getElementById("namesList");
+            winners.forEach((name, index) => {
+                const li = document.createElement("li");
+                li.textContent = name;
+                li.style.opacity = 0;
+                li.style.transform = "translateX(50px)";
+                li.style.transition = "all 0.5s ease";
+                setTimeout(() => {
+                    li.style.opacity = 1;
+                    li.style.transform = "translateX(0)";
+                }, index * 100);
+                ul.appendChild(li);
+            });
         }
-
-        // هنا تحدد نسبة التقدم
-        startProgress("progress", "status", 20, 40);
-        startProgress("progress", "status", 0, 40);
-        startProgress("progress", "status", 0, 40);
-
     </script>
-
 </body>
 
 </html>
