@@ -3,302 +3,119 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>شريط تقدم ثم قاعدة بيانات الطلاب</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <title>شريط تقدم مع اسم</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
+            background: #111;
             color: #fff;
-            padding: 20px;
-        }
-
-        /* شريط التقدّم */
-        #progressContainer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 500px;
-            margin-bottom: 50px;
-        }
-
-        .card-progress {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 25px;
-            border-radius: 18px;
-            width: 100%;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(8px);
+            font-family: Arial, sans-serif;
             text-align: center;
-            margin-bottom: 20px;
+            padding: 40px;
         }
 
-        .card-progress h1 {
-            font-size: 22px;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
-        }
-
-        .track {
-            position: relative;
-            height: 28px;
-            background: #334155;
-            border-radius: 999px;
-            overflow: hidden;
-        }
-
-        .fill {
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 0%;
-            background: linear-gradient(90deg, #06b6d4, #8b5cf6);
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            font-weight: bold;
-            padding-right: 12px;
-            color: #0f172a;
-            border-radius: 999px;
-            transition: width 0.5s ease;
-        }
-
-        .fill::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-            background-size: 40px 40px;
-            animation: move 2s linear infinite;
-            border-radius: 999px;
-        }
-
-        @keyframes move {
-            from {
-                background-position: 0 0;
-            }
-
-            to {
-                background-position: 40px 0;
-            }
-        }
-
-        .status {
-            margin-top: 15px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #93c5fd;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        /* قاعدة البيانات */
-        #dbContainer {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
-        h1.dbTitle {
-            font-size: 28px;
-            text-align: center;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 25px;
-            width: 100%;
-            max-width: 1200px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.05);
+        .progress-container {
+            width: 80%;
+            max-width: 500px;
+            height: 30px;
+            background: #333;
             border-radius: 20px;
-            padding: 25px 15px;
-            text-align: center;
-            font-weight: 700;
+            overflow: hidden;
+            margin: 10px auto 25px auto;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #00d4ff, #7b61ff);
+            border-radius: 20px;
+            box-shadow: 0 0 20px #00d4ff;
+            transition: width 0.2s;
+        }
+
+        .progress-bar.second {
+            background: linear-gradient(90deg, #ff0080, #ffcd00);
+            box-shadow: 0 0 20px #ff0080;
+        }
+
+        .percent {
+            margin-top: 5px;
             font-size: 18px;
-            cursor: pointer;
-            color: #fff;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            transition: all 0.4s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .card:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
-            color: #fff;
-        }
-
-        .table-container {
-            margin-top: 40px;
+            font-weight: bold;
             display: none;
-            width: 100%;
-            max-width: 1000px;
-            animation: fadeIn 0.8s ease forwards;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        th,
-        td {
-            padding: 18px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-
-        th {
-            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
-            font-weight: 700;
-            font-size: 16px;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #0ff;
         }
     </style>
 </head>
 
 <body>
+    <h1> لم يبدا اكتمال الاسماء </h1>
 
-    <!-- شريط التقدّم -->
-    <div id="progressContainer">
-        <div class="card-progress">
-            <h1>شريط التقدّم بالمراحل</h1>
-            <div class="track">
-                <div class="fill" id="fill">0%</div>
-            </div>
-            <div class="status" id="status">جارٍ التحميل...</div>
-        </div>
+    <!-- الشريط الأول -->
+    <div class="name">🌟 مرحله الاكتمال الاسماء</div>
+    <div class="progress-container">
+        <div class="progress-bar" id="bar1"></div>
     </div>
+    <div class="percent" id="percent1"></div>
 
-    <!-- قاعدة بيانات الطلاب -->
-    <div id="dbContainer">
-        <h1 class="dbTitle">📋 جدول روليت الفائزين اضغط على اسمك - مبروك! احفظ رقم روليتك</h1>
-        <div class="grid">
-            <div class="card" onclick="showInfo('جاسم','2007','روليت الاول','فايز','4840384830')">جاسم</div>
-            <div class="card" onclick="showInfo('ناصر','2006','روليت الثانيه','فايز','4829384938')">ناصر</div>
-            <div class="card" onclick="showInfo('ياسين','2008','روليت الثالثه','فايز','4938493849')">ياسين</div>
-            <div class="card" onclick="showInfo('زيد','2005','روليت الرابعه','فايز','5748393849')">زيد</div>
-            <div class="card" onclick="showInfo('سامي','2007','روليت الخامسه','فايز','4840384830')">سامي</div>
-            <div class="card" onclick="showInfo('رائد','2006','روليت السادسه','فايز','4829384938')">رائد</div>
-            <div class="card" onclick="showInfo('عمار','2008','روليت سابعه','فايز','4938493849')">عمار</div>
-            <div class="card" onclick="showInfo('ميثم','2005','روليت ثامنه','فايز','5748393849')">ميثم</div>
-            <div class="card" onclick="showInfo('علاء','2007','روليت التاسعه','فايز','4840384830')">علاء</div>
-            <div class="card" onclick="showInfo('حسن','2006','روليت العاشره','فايز','4829384938')">حسن</div>
-            <div class="card" onclick="showInfo('مازن','2008','روليت الحادي عشر','فايز','4938493849')">مازن</div>
-            <div class="card" onclick="showInfo('مالك','2005','روليت الثاني عشر','فايز','5748393849')">مالك</div>
-            <div class="card" onclick="showInfo('انور','2007','روليت الثالثه عشر','فايز','4840384830')">انور</div>
-            <div class="card" onclick="showInfo('سيف','2006','روليت الرابعه عشر','فايز','4829384938')">سيف</div>
-            <div class="card" onclick="showInfo('غيث','2008','روليت الخامسه عشر','فايز','4938493849')">غيث</div>
-            <div class="card" onclick="showInfo('أنس','2005','روليت السادسه عشر','فايز','5748393849')">أنس</div>
-            <div class="card" onclick="showInfo('مهند','2007','روليت السابعه عشر','فايز','4840384830')">مهند</div>
-            <div class="card" onclick="showInfo('نزار','2006','روليت الثامنه عشر','فايز','4829384938')">نزار</div>
-            <div class="card" onclick="showInfo('نبراس','2008','المرحلة التاسعه','فايز','4938493849')">نبراس</div>
-        </div>
-
-        <div id="tableContainer" class="table-container">
-            <table>
-                <tr>
-                    <th>الاسم</th>
-                    <th>المواليد</th>
-                    <th>روليت</th>
-                    <th>فائزين</th>
-                    <th>الرقم روليت</th>
-                </tr>
-                <tr>
-                    <td id="name"></td>
-                    <td id="dob"></td>
-                    <td id="stage"></td>
-                    <td id="dept"></td>
-                    <td id="id"></td>
-                </tr>
-            </table>
-        </div>
+    <!-- الشريط الثاني -->
+    <div class="name">🌟 مرحله اضافه الاسماء</div>
+    <div class="progress-container">
+        <div class="progress-bar second" id="bar2"></div>
     </div>
+    <div class="percent" id="percent2"></div>
+    <div class="name">🌟 مرحله التدقيق الاسماء</div>
+    <div class="progress-container">
+        <div class="progress-bar second" id="bar3"></div>
+    </div>
+    <div class="percent" id="percent2"></div>
+
+    <div class="name">🌟 مرحله رفع الاسماء</div>
+    <div class="progress-container">
+        <div class="progress-bar second" id="bar4"></div>
+    </div>
+    <div class="percent" id="percent3"></div>
 
     <script>
-        const fill = document.getElementById("fill");
-        const status = document.getElementById("status");
-        let current = 0;
+        function autoProgress(barId, percentId, speed, maxProgress) {
+            let bar = document.getElementById(barId);
+            let percent = document.getElementById(percentId);
+            let progress = 0;
 
-        function setProgress(p) {
-            p = Math.max(0, Math.min(100, Math.round(p)));
-            fill.style.width = p + "%";
-            fill.textContent = p + "%";
-            current = p;
+            let interval = setInterval(() => {
+                if (progress >= maxProgress) {
+                    clearInterval(interval);
 
-            if (p < 30) status.textContent = "جارٍ التحميل...";
-            else if (p < 70) status.textContent = "مرحلة التدقيق";
-            else if (p < 100) status.textContent = "مرحلة الرفع النهائي";
-            else if (p === 100) status.textContent = "مرحلة الرفع النهائي مكتمل ✅";
-
-            if (p >= 100) {
-                setTimeout(() => {
-                    document.getElementById("progressContainer").style.display = "none";
-                    document.getElementById("dbContainer").style.display = "flex";
-                }, 60000);
-            }
+                    // فقط إذا وصل 100 يضهر الرقم
+                    if (maxProgress === 100) {
+                        percent.style.display = "block";
+                        percent.textContent = "100%";
+                    }
+                } else {
+                    progress++;
+                    bar.style.width = progress + "%";
+                }
+            }, speed);
         }
 
-        function autoRun() {
-            const interval = setInterval(() => {
-                const inc = Math.random() * 4 + 1;
-                setProgress(current + inc);
-                if (current >= 100) clearInterval(interval);
-            }, 500);
-        }
-        autoRun();
+        // شريط أحمد يوصل 80% (بدون رقم)
+        autoProgress("bar1", "percent1", 80, 10);
 
-        function showInfo(name, dob, stage, dept, id) {
-            document.getElementById("name").innerText = name;
-            document.getElementById("dob").innerText = dob;
-            document.getElementById("stage").innerText = stage;
-            document.getElementById("dept").innerText = dept;
-            document.getElementById
-            document.getElementById("id").innerText = id;
-            document.getElementById("tableContainer").style.display = "block";
-        }
+        // شريط علي يوصل 100% (يكتب الرقم)
+        autoProgress("bar2", "percent2", 120, 0);
+        autoProgress("bar2", "percent3", 120, 0);
+        autoProgress("bar2", "percent4", 120, 0);
+
+
+
+
     </script>
-
 </body>
 
 </html>
