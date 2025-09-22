@@ -51,38 +51,61 @@
             margin-bottom: 5px;
             color: #0ff;
         }
+
+        .stopped {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff4444;
+            margin-top: 40px;
+            display: none;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 
 <body>
-    <h1> لم يبدا اكتمال الاسماء </h1>
+    <h1>🔴 عاجل: تمت إضافة 30 اسم جديد. سيتم إيقاف العملية بعد 20 دقيقة.</h1>
 
     <!-- الشريط الأول -->
-    <div class="name">🌟 مرحله الاكتمال الاسماء</div>
+    <div class="name">🌟 مرحلة الاكتمال الاسماء</div>
     <div class="progress-container">
         <div class="progress-bar" id="bar1"></div>
     </div>
     <div class="percent" id="percent1"></div>
 
     <!-- الشريط الثاني -->
-    <div class="name">🌟 مرحله اضافه الاسماء</div>
+    <div class="name">🌟 مرحلة إضافة الأسماء</div>
     <div class="progress-container">
         <div class="progress-bar second" id="bar2"></div>
     </div>
     <div class="percent" id="percent2"></div>
-    <div class="name">🌟 مرحله التدقيق الاسماء</div>
+
+    <!-- الشريط الثالث -->
+    <div class="name">🌟 مرحلة التدقيق الاسماء</div>
     <div class="progress-container">
         <div class="progress-bar second" id="bar3"></div>
     </div>
-    <div class="percent" id="percent2"></div>
+    <div class="percent" id="percent3"></div>
 
-    <div class="name">🌟 مرحله رفع الاسماء</div>
+    <!-- الشريط الرابع -->
+    <div class="name">🌟 مرحلة رفع الاسماء</div>
     <div class="progress-container">
         <div class="progress-bar second" id="bar4"></div>
     </div>
-    <div class="percent" id="percent3"></div>
+    <div class="percent" id="percent4"></div>
+
+    <!-- رسالة الإيقاف -->
+    <div class="stopped" id="stopMessage">🚫 تم وقف إضافة الأسماء</div>
 
     <script>
+        let intervals = [];
+
         function autoProgress(barId, percentId, speed, maxProgress) {
             let bar = document.getElementById(barId);
             let percent = document.getElementById(percentId);
@@ -91,8 +114,6 @@
             let interval = setInterval(() => {
                 if (progress >= maxProgress) {
                     clearInterval(interval);
-
-                    // فقط إذا وصل 100 يضهر الرقم
                     if (maxProgress === 100) {
                         percent.style.display = "block";
                         percent.textContent = "100%";
@@ -102,25 +123,21 @@
                     bar.style.width = progress + "%";
                 }
             }, speed);
+
+            intervals.push(interval);
         }
 
-        // شريط أحمد يوصل 80% (بدون رقم)
+        // تشغيل الشرائط
         autoProgress("bar1", "percent1", 80, 100);
+        autoProgress("bar2", "percent2", 100, 100);
+        autoProgress("bar3", "percent3", 120, 20);
+        autoProgress("bar4", "percent4", 140, 100);
 
-        // شريط علي يوصل 100% (يكتب الرقم)
-        autoProgress("bar2", "percent2", 120, 100);
-        autoProgress("bar2", "percent3", 120, 30);
-        autoProgress("bar2", "percent4", 120, 0);
-
-
-
-
+        // بعد 20 دقيقة يتوقف
+        setTimeout(() => {
+            intervals.forEach(interval => clearInterval(interval));
+            document.getElementById("stopMessage").style.display = "block";
+        }, 20 * 60 * 1000); // 20 دقيقة
     </script>
 </body>
-
 </html>
-
-
-
-
-
