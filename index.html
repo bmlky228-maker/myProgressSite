@@ -3,21 +3,52 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>   روليت الاسماء</title>
+    <title>شريط تقدم طبيعي ومميز</title>
     <style>
         body {
             background: #111;
             color: #fff;
             font-family: Arial, sans-serif;
             text-align: center;
+            /* النصوص الأخرى تبقى في الوسط */
             padding: 40px;
+        }
+
+        h1 {
+            color: #00f;
+
+            /* لون النص الأزرق */
+            text-align: right;
+            /* على اليمين */
+            font-size: 32px;
+        }
+
+        h2 {
+            color: rgb(47, 0, 255);
+            /* لون النص الأخضر */
+            text-align: right;
+            font-size: 32px;
+        }
+
+        h3 {
+            color: rgb(0, 4, 255);
+            /* لون النص الأصفر */
+            text-align: right;
+            font-size: 32px;
+        }
+
+        h4 {
+            color: rgb(255, 255, 255);
+            /* لون النص الأصفر */
+            text-align: right;
+            font-size: 32px;
         }
 
         .progress-container {
             width: 80%;
-            height: 80px;
+            height: 20px;
             background: #333;
-            border-radius: 20px;
+            border-radius: 40px;
             overflow: hidden;
             margin: 10px auto 25px auto;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
@@ -35,28 +66,24 @@
 
         .progress-bar.first {
             width: 100%;
-            /* ثابت */
             background: linear-gradient(90deg, #00d4ff, #6fffbc);
             box-shadow: 0 0 20px #15ff00;
         }
 
         .progress-bar.second {
             width: 100%;
-            /* ثابت */
             background: linear-gradient(90deg, #00f85f, #112fb3);
             box-shadow: 0 0 20px #fc3200;
         }
 
         .progress-bar.third {
             width: 100%;
-            /* ثابت */
             background: linear-gradient(90deg, #ff6b6b, #feca57);
             box-shadow: 0 0 20px #ff9f43;
         }
 
         .progress-bar.fourth {
             width: 0;
-            /* متحرك */
             background: linear-gradient(90deg, #9b59b6, #8e44ad);
             box-shadow: 0 0 20px #6c5ce7;
         }
@@ -72,7 +99,11 @@
 
 <body>
 
-    <h1>🌟 حالة رفع الأسماء</h1>
+    <!-- نصوص مكررة على اليمين -->
+    <h1> تم اكتمال:اكتمال الاسماء </h1>
+    <h2> تم اكتمال:اضافه الاسماء</h2>
+    <h3>تم اكتمال:التدقيق الاسماء</h3>
+    <h4> حاله:رفع الاسماء</h4>
 
     <div id="mainContent">
         <div class="name">مرحلة الاكتمال الاسماء</div>
@@ -112,12 +143,9 @@
         }
 
         // تشغيل الشريط الرابع فقط عند فتح الصفحة
-        autoProgress("bar4", 100, 60); // مثال: يصل إلى 50% فقط
+        autoProgress("bar4", 100, 80);
     </script>
 
 </body>
 
 </html>
-
-
-
