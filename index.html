@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>شريط تقدم مع توقيت</title>
+    <title>شريط تقدم طبيعي</title>
     <style>
         body {
             background: #111;
@@ -43,69 +43,36 @@
             margin-bottom: 5px;
             color: #0ff;
         }
-
-        /* تصميم الوقت الخرافي */
-        #timer {
-            font-size: 28px;
-            margin: 20px;
-            font-weight: bold;
-            color: #ff4444;
-            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff4444, 0 0 30px #ff7777;
-            animation: pulse 1s infinite alternate;
-        }
-
-        @keyframes pulse {
-            from {
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            to {
-                transform: scale(1.1);
-                opacity: 0.7;
-            }
-        }
-
-        #stoppedMessage {
-            display: none;
-            font-size: 24px;
-            font-weight: bold;
-            color: #ff4444;
-            margin-top: 30px;
-        }
     </style>
 </head>
 
 <body>
-    <h1>🔴 عاجل: فقط دقيقتين تتوقف الأسماء!ومن ثم اضافه الاسماء 30</h1>
-    <div id="timer">الوقت المتبقي: 02:00</div>
+
+    <h1>🌟 تم اضافه الاسماء </h1>
 
     <div id="mainContent">
-        <div class="name">🌟 مرحله الاكتمال الاسماء</div>
+        <div class="name">مرحلة الاكتمال الاسماء</div>
         <div class="progress-container">
             <div class="progress-bar" id="bar1"></div>
         </div>
 
-        <div class="name">🌟 مرحله اضافه الاسماء</div>
+        <div class="name">مرحلة اضافة الاسماء</div>
         <div class="progress-container">
             <div class="progress-bar second" id="bar2"></div>
         </div>
 
-        <div class="name">🌟 مرحله التدقيق الاسماء</div>
+        <div class="name">مرحلة التدقيق الاسماء</div>
         <div class="progress-container">
             <div class="progress-bar second" id="bar3"></div>
         </div>
 
-        <div class="name">🌟 مرحله رفع الاسماء</div>
+        <div class="name">مرحلة رفع الاسماء</div>
         <div class="progress-container">
             <div class="progress-bar second" id="bar4"></div>
         </div>
     </div>
 
-    <div id="stoppedMessage">⛔ تم إيقاف الأسماء</div>
-
     <script>
-        let timerInterval;
         let progressIntervals = [];
 
         function autoProgress(barId, speed, maxProgress) {
@@ -125,54 +92,18 @@
         function startProgress() {
             progressIntervals.forEach(clearInterval);
             progressIntervals = [];
-
             document.querySelectorAll(".progress-bar").forEach(bar => bar.style.width = "0");
 
             autoProgress("bar1", 100, 100);
             autoProgress("bar2", 120, 100);
-            autoProgress("bar3", 140, 20);
+            autoProgress("bar3", 140, 90);
             autoProgress("bar4", 160, 0);
-
-            startTimer(2 * 60); // دقيقتين
         }
 
-        function startTimer(duration) {
-            let display = document.getElementById("timer");
-            let endTime = localStorage.getItem("endTime");
-
-            if (!endTime) {
-                endTime = Date.now() + duration * 1000;
-                localStorage.setItem("endTime", endTime);
-            }
-
-            function updateTimer() {
-                let timeLeft = Math.floor((endTime - Date.now()) / 1000);
-
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    stopAll();
-                    localStorage.removeItem("endTime");
-                } else {
-                    let minutes = Math.floor(timeLeft / 60);
-                    let seconds = timeLeft % 60;
-                    display.textContent = `الوقت المتبقي: ${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-                }
-            }
-
-            updateTimer();
-            clearInterval(timerInterval);
-            timerInterval = setInterval(updateTimer, 1000);
-        }
-
-        function stopAll() {
-            document.getElementById("mainContent").style.display = "none";
-            document.getElementById("timer").style.display = "none";
-            document.getElementById("stoppedMessage").style.display = "block";
-            progressIntervals.forEach(clearInterval);
-        }
-
+        // تشغيل الشريط مباشرة عند فتح الصفحة
         startProgress();
     </script>
+
 </body>
 
 </html>
