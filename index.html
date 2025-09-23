@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>شريط تقدم مع اسم</title>
+    <title>شريط تقدم مع توقيت</title>
     <style>
         body {
             background: #111;
@@ -15,7 +15,6 @@
 
         .progress-container {
             width: 80%;
-            max-width: 10000px;
             height: 30px;
             background: #333;
             border-radius: 20px;
@@ -38,13 +37,6 @@
             box-shadow: 0 0 20px #ff0080;
         }
 
-        .percent {
-            margin-top: 5px;
-            font-size: 18px;
-            font-weight: bold;
-            display: none;
-        }
-
         .name {
             font-size: 20px;
             font-weight: bold;
@@ -52,93 +44,135 @@
             color: #0ff;
         }
 
-        .stopped {
+        /* تصميم الوقت الخرافي */
+        #timer {
             font-size: 28px;
+            margin: 20px;
             font-weight: bold;
             color: #ff4444;
-            margin-top: 40px;
-            display: none;
-            animation: blink 1s infinite;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff4444, 0 0 30px #ff7777;
+            animation: pulse 1s infinite alternate;
         }
 
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            to {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
+        }
+
+        #stoppedMessage {
+            display: none;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff4444;
+            margin-top: 30px;
         }
     </style>
 </head>
 
 <body>
-    <h1>🔴 عاجل:تم مناشده  إضافة 30 اسم جديد. سيتم إيقاف العملية بعد 20 دقيقة.</h1>
+    <h1>🔴 عاجل: فقط دقيقتين تتوقف الأسماء!ومن ثم اضافه الاسماء 30</h1>
+    <div id="timer">الوقت المتبقي: 02:00</div>
 
-    <!-- الشريط الأول -->
-    <div class="name">🌟 مرحلة الاكتمال الاسماء</div>
-    <div class="progress-container">
-        <div class="progress-bar" id="bar1"></div>
+    <div id="mainContent">
+        <div class="name">🌟 مرحله الاكتمال الاسماء</div>
+        <div class="progress-container">
+            <div class="progress-bar" id="bar1"></div>
+        </div>
+
+        <div class="name">🌟 مرحله اضافه الاسماء</div>
+        <div class="progress-container">
+            <div class="progress-bar second" id="bar2"></div>
+        </div>
+
+        <div class="name">🌟 مرحله التدقيق الاسماء</div>
+        <div class="progress-container">
+            <div class="progress-bar second" id="bar3"></div>
+        </div>
+
+        <div class="name">🌟 مرحله رفع الاسماء</div>
+        <div class="progress-container">
+            <div class="progress-bar second" id="bar4"></div>
+        </div>
     </div>
-    <div class="percent" id="percent1"></div>
 
-    <!-- الشريط الثاني -->
-    <div class="name">🌟 مرحلة إضافة الأسماء</div>
-    <div class="progress-container">
-        <div class="progress-bar second" id="bar2"></div>
-    </div>
-    <div class="percent" id="percent2"></div>
-
-    <!-- الشريط الثالث -->
-    <div class="name">🌟 مرحلة التدقيق الاسماء</div>
-    <div class="progress-container">
-        <div class="progress-bar second" id="bar3"></div>
-    </div>
-    <div class="percent" id="percent3"></div>
-
-    <!-- الشريط الرابع -->
-    <div class="name">🌟 مرحلة رفع الاسماء</div>
-    <div class="progress-container">
-        <div class="progress-bar second" id="bar4"></div>
-    </div>
-    <div class="percent" id="percent4"></div>
-
-    <!-- رسالة الإيقاف -->
-    <div class="stopped" id="stopMessage">🚫 تم وقف إضافة الأسماء</div>
+    <div id="stoppedMessage">⛔ تم إيقاف الأسماء</div>
 
     <script>
-        let intervals = [];
+        let timerInterval;
+        let progressIntervals = [];
 
-        function autoProgress(barId, percentId, speed, maxProgress) {
+        function autoProgress(barId, speed, maxProgress) {
             let bar = document.getElementById(barId);
-            let percent = document.getElementById(percentId);
             let progress = 0;
-
             let interval = setInterval(() => {
                 if (progress >= maxProgress) {
                     clearInterval(interval);
-                    if (maxProgress === 100) {
-                        percent.style.display = "block";
-                        percent.textContent = "100%";
-                    }
                 } else {
                     progress++;
                     bar.style.width = progress + "%";
                 }
             }, speed);
-
-            intervals.push(interval);
+            progressIntervals.push(interval);
         }
 
-        // تشغيل الشرائط
-        autoProgress("bar1", "percent1", 80, 100);
-        autoProgress("bar2", "percent2", 100, 100);
-        autoProgress("bar3", "percent3", 120, 20);
-        autoProgress("bar4", "percent4", 140, 0);
+        function startProgress() {
+            progressIntervals.forEach(clearInterval);
+            progressIntervals = [];
 
-        // بعد 20 دقيقة يتوقف
-        setTimeout(() => {
-            intervals.forEach(interval => clearInterval(interval));
-            document.getElementById("stopMessage").style.display = "block";
-        }, 20 * 60 * 1000); // 20 دقيقة
+            document.querySelectorAll(".progress-bar").forEach(bar => bar.style.width = "0");
+
+            autoProgress("bar1", 100, 100);
+            autoProgress("bar2", 120, 100);
+            autoProgress("bar3", 140, 20);
+            autoProgress("bar4", 160, 0);
+
+            startTimer(2 * 60); // دقيقتين
+        }
+
+        function startTimer(duration) {
+            let display = document.getElementById("timer");
+            let endTime = localStorage.getItem("endTime");
+
+            if (!endTime) {
+                endTime = Date.now() + duration * 1000;
+                localStorage.setItem("endTime", endTime);
+            }
+
+            function updateTimer() {
+                let timeLeft = Math.floor((endTime - Date.now()) / 1000);
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    stopAll();
+                    localStorage.removeItem("endTime");
+                } else {
+                    let minutes = Math.floor(timeLeft / 60);
+                    let seconds = timeLeft % 60;
+                    display.textContent = `الوقت المتبقي: ${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+                }
+            }
+
+            updateTimer();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function stopAll() {
+            document.getElementById("mainContent").style.display = "none";
+            document.getElementById("timer").style.display = "none";
+            document.getElementById("stoppedMessage").style.display = "block";
+            progressIntervals.forEach(clearInterval);
+        }
+
+        startProgress();
     </script>
 </body>
-</html>
 
+</html>
