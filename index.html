@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>شريط تقدم طبيعي</title>
+    <title>   روليت الاسماء</title>
     <style>
         body {
             background: #111;
@@ -23,18 +23,42 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
         }
 
-        .progress-bar {
+        .progress-bar.first,
+        .progress-bar.second,
+        .progress-bar.third,
+        .progress-bar.fourth {
             height: 100%;
-            width: 0;
-            background: linear-gradient(90deg, #00d4ff, #7b61ff);
             border-radius: 20px;
-            box-shadow: 0 0 20px #00d4ff;
             transition: width 0.2s;
+            position: relative;
+        }
+
+        .progress-bar.first {
+            width: 100%;
+            /* ثابت */
+            background: linear-gradient(90deg, #00d4ff, #6fffbc);
+            box-shadow: 0 0 20px #15ff00;
         }
 
         .progress-bar.second {
-            background: linear-gradient(90deg, #ff0080, #ffcd00);
-            box-shadow: 0 0 20px #ff0080;
+            width: 100%;
+            /* ثابت */
+            background: linear-gradient(90deg, #00f85f, #112fb3);
+            box-shadow: 0 0 20px #fc3200;
+        }
+
+        .progress-bar.third {
+            width: 100%;
+            /* ثابت */
+            background: linear-gradient(90deg, #ff6b6b, #feca57);
+            box-shadow: 0 0 20px #ff9f43;
+        }
+
+        .progress-bar.fourth {
+            width: 0;
+            /* متحرك */
+            background: linear-gradient(90deg, #9b59b6, #8e44ad);
+            box-shadow: 0 0 20px #6c5ce7;
         }
 
         .name {
@@ -48,36 +72,35 @@
 
 <body>
 
-    <h1>🌟 تم اضافه الاسماء </h1>
+    <h1>🌟 حالة رفع الأسماء</h1>
 
     <div id="mainContent">
         <div class="name">مرحلة الاكتمال الاسماء</div>
         <div class="progress-container">
-            <div class="progress-bar" id="bar1"></div>
+            <div class="progress-bar first" id="bar1"></div>
         </div>
 
-        <div class="name">مرحلة اضافة الاسماء</div>
+        <div class="name">مرحلة إضافة الاسماء</div>
         <div class="progress-container">
             <div class="progress-bar second" id="bar2"></div>
         </div>
 
         <div class="name">مرحلة التدقيق الاسماء</div>
         <div class="progress-container">
-            <div class="progress-bar second" id="bar3"></div>
+            <div class="progress-bar third" id="bar3"></div>
         </div>
 
         <div class="name">مرحلة رفع الاسماء</div>
         <div class="progress-container">
-            <div class="progress-bar second" id="bar4"></div>
+            <div class="progress-bar fourth" id="bar4"></div>
         </div>
     </div>
 
     <script>
-        let progressIntervals = [];
-
         function autoProgress(barId, speed, maxProgress) {
             let bar = document.getElementById(barId);
             let progress = 0;
+
             let interval = setInterval(() => {
                 if (progress >= maxProgress) {
                     clearInterval(interval);
@@ -86,22 +109,10 @@
                     bar.style.width = progress + "%";
                 }
             }, speed);
-            progressIntervals.push(interval);
         }
 
-        function startProgress() {
-            progressIntervals.forEach(clearInterval);
-            progressIntervals = [];
-            document.querySelectorAll(".progress-bar").forEach(bar => bar.style.width = "0");
-
-            autoProgress("bar1", 100, 100);
-            autoProgress("bar2", 120, 100);
-            autoProgress("bar3", 140, 90);
-            autoProgress("bar4", 160, 0);
-        }
-
-        // تشغيل الشريط مباشرة عند فتح الصفحة
-        startProgress();
+        // تشغيل الشريط الرابع فقط عند فتح الصفحة
+        autoProgress("bar4", 100, 10); // مثال: يصل إلى 50% فقط
     </script>
 
 </body>
