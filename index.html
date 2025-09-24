@@ -19,17 +19,9 @@
         }
 
         @keyframes gradientBG {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         header {
@@ -165,79 +157,72 @@
             transition: width 0.4s ease;
         }
 
-        .progress-bar1 {
-            background: #6c5ce7;
-        }
-
-        .progress-bar2 {
-            background: #00cec9;
-        }
-
-        .progress-bar3 {
-            background: #fd79a8;
-        }
-
-        .progress-bar4 {
-            background: #00b894;
-        }
-
-        .progress-bar5 {
-            background: #e17055;
-        }
-
-        .progress-bar6 {
-            background: #fdcb6e;
-        }
-
-        .progress-bar7 {
-            background: #0984e3;
-        }
-
-        .progress-bar8 {
-            background: #d63031;
-        }
+        .progress-bar1 { background: #6c5ce7; }
+        .progress-bar2 { background: #00cec9; }
+        .progress-bar3 { background: #fd79a8; }
+        .progress-bar4 { background: #00b894; }
+        .progress-bar5 { background: #e17055; }
+        .progress-bar6 { background: #fdcb6e; }
+        .progress-bar7 { background: #0984e3; }
+        .progress-bar8 { background: #d63031; }
 
         /* أنيميشن */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px);} to {opacity:1; transform:translateY(0);} }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px);} to {opacity:1; transform:translateY(0);} }
+        @keyframes slideIn { from { opacity:0; transform: translateX(100px);} to {opacity:1; transform:translateX(0);} }
+
+        /* ----------- التوافق مع الهواتف ----------- */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                flex-wrap: wrap;
+                padding: 10px;
+                gap: 5px;
             }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+            .sidebar button {
+                flex: 1 1 48%;
+                margin: 5px 1%;
+                font-size: 14px;
+                padding: 10px;
             }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(100px);
+            .content {
+                margin: 0;
+                padding: 15px;
             }
 
-            to {
-                opacity: 1;
-                transform: translateX(0);
+            header {
+                font-size: 22px;
+                padding: 15px;
+            }
+
+            .page {
+                padding: 15px;
+            }
+
+            table.custom-table th,
+            table.custom-table td {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .progress-container {
+                height: 20px;
+            }
+
+            .progress-bar {
+                line-height: 20px;
+                font-size: 12px;
             }
         }
     </style>
 </head>
 
 <body>
-
     <header>📱 تطبيقي الخرافي</header>
 
     <!-- الشريط الجانبي -->
@@ -252,11 +237,9 @@
 
     <!-- المحتوى -->
     <div class="content">
-
         <div id="home" class="page active">
             <h2>مرحبا بك 👋</h2>
             <p>هذا هو القسم الرئيسي من التطبيق. من القائمة الجانبية تقدر تنتقل لباقي الأقسام.</p>
-            <p>قسم روليت خمس روليات: الأول يختلف عن الثاني والثاني عن الثالث...</p>
         </div>
 
         <div id="news" class="page">
@@ -281,8 +264,15 @@
             <table class="custom-table">
                 <thead>
                     <tr>
-
-                        </tbody>
+                        <th>الرقم</th>
+                        <th>الاسم</th>
+                        <th>النتيجة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>علي</td><td>نجح</td></tr>
+                    <tr><td>2</td><td>أحمد</td><td>نجح</td></tr>
+                </tbody>
             </table>
         </div>
 
@@ -290,51 +280,34 @@
             <h2>⏳ شريط التقدم</h2>
 
             <h3>حالة: الاكتمال الاسماء</h3>
-            <div class="progress-container">
-                <div class="progress-bar progress-bar1" id="progressBar1"></div>
-            </div>
+            <div class="progress-container"><div class="progress-bar progress-bar1" id="progressBar1"></div></div>
 
             <h3>حالة: اضافه الاسماء</h3>
-            <div class="progress-container">
-                <div class="progress-bar progress-bar2" id="progressBar2"></div>
-            </div>
+            <div class="progress-container"><div class="progress-bar progress-bar2" id="progressBar2"></div></div>
 
             <h3>حالة: التدقيق</h3>
-            <div class="progress-container">
-                <div class="progress-bar progress-bar3" id="progressBar3"></div>
-            </div>
+            <div class="progress-container"><div class="progress-bar progress-bar3" id="progressBar3"></div></div>
 
             <h3>حالة: باقه</h3>
-            <div class="progress-container">
-                <div class="progress-bar progress-bar4" id="progressBar4"></div>
-            </div>
+            <div class="progress-container"><div class="progress-bar progress-bar4" id="progressBar4"></div></div>
 
             <h3>حالة: عملك</h3>
-            <div class="progress-container">
-                <div class="progress-bar progress-bar5" id="progressBar5"></div>
-            </div>
+            <div class="progress-container"><div class="progress-bar progress-bar5" id="progressBar5"></div></div>
 
             <h3>حالة: الاكتمال حالات</h3>
-            <div class="progress-container">
-                <div class="progress-bar progress-bar6" id="progressBar6"></div>
-            </div>
+            <div class="progress-container"><div class="progress-bar progress-bar6" id="progressBar6"></div></div>
 
             <h3>حالة: التدقيق</h3>
-            <div class="progress-container">
-                <div class="progress-bar progress-bar7" id="progressBar7"></div>
-            </div>
+            <div class="progress-container"><div class="progress-bar progress-bar7" id="progressBar7"></div></div>
 
             <h3>حالة: رفع البيانات</h3>
-            <div class="progress-container">
-                <div class="progress-bar progress-bar8" id="progressBar8"></div>
-            </div>
+            <div class="progress-container"><div class="progress-bar progress-bar8" id="progressBar8"></div></div>
         </div>
 
         <div id="about" class="page">
             <h2>ℹ️ عن التطبيق</h2>
             <p>هذا التطبيق مخصص لمتابعة الأخبار والنتائج وشريط التقدم بشكل خرافي 😎</p>
         </div>
-
     </div>
 
     <script>
@@ -365,5 +338,5 @@
     </script>
 
 </body>
-
 </html>
+
