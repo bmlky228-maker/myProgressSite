@@ -74,12 +74,21 @@
         .progress-bar {
             height: 100%;
             width: 0;
-            background: linear-gradient(90deg, #00c6ff, #0072ff);
             text-align: right;
             line-height: 25px;
             color: white;
             border-radius: 25px;
         }
+
+        /* ألوان مختلفة لكل شريط */
+        #progressBar1 { background: linear-gradient(90deg, #3498db, #3498db); }
+        #progressBar2 { background: linear-gradient(90deg, #3498db, #3498db); }
+        #progressBar3 { background: linear-gradient(90deg, #3498db, #3498db); }
+        #progressBar4 { background: linear-gradient(90deg, #1abc9c, #1abc9c); }
+        #progressBar5 { background: linear-gradient(90deg, #8e44ad, #6c3483); }
+        #progressBar6 { background: linear-gradient(90deg, #00b894, #00695c); }
+        #progressBar7 { background: linear-gradient(90deg, #e67e22, #d35400); }
+        #progressBar8 { background: linear-gradient(90deg, #c0392b, #e74c3c); }
 
         /* جدول */
         table {
@@ -145,17 +154,17 @@
     <div id="progress" class="page">
         <h2>⏳ شريط التقدم</h2>
 
-        <h3>حالة: الاكتمال الاسماء</h3>
+        <h3>تم اكتملت: الاكتمال الاسماء</h3>
         <div class="progress-container">
             <div class="progress-bar" id="progressBar1"></div>
         </div>
 
-        <h3>حالة: اضافه الاسماء</h3>
+        <h3>تم اكتملت: اضافه الاسماء</h3>
         <div class="progress-container">
             <div class="progress-bar" id="progressBar2"></div>
         </div>
 
-        <h3>حالة: التدقيق</h3>
+        <h3>تم اكتملت: التدقيق</h3>
         <div class="progress-container">
             <div class="progress-bar" id="progressBar3"></div>
         </div>
@@ -187,7 +196,6 @@
     </div>
 
     <!-- جدول البيانات -->
-    <!-- جدول البيانات -->
     <div id="table" class="page">
         <h2>📊 جدول البيانات</h2>
         <!-- الجدول مخفي ولن يظهر حتى تكتمل البيانات -->
@@ -214,16 +222,10 @@
         </table>
     </div>
 
-
     <script>
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-        }
-
-        function toggleTable() {
-            const table = document.getElementById("dataTable");
-            table.style.display = (table.style.display === "none" || table.style.display === "") ? "table" : "none";
         }
 
         // شريط التقدم
@@ -234,8 +236,7 @@
                 if (width >= targetPercent) {
                     clearInterval(interval);
                     bar.style.width = targetPercent + '%';
-                }
-                else {
+                } else {
                     width++;
                     bar.style.width = width + '%';
                 }
@@ -256,4 +257,3 @@
 </body>
 
 </html>
-
