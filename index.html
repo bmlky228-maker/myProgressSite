@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>تطبيقي الجديد</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <style>
         body {
             margin: 0;
@@ -61,7 +60,6 @@
             border-radius: 10px;
         }
 
-        /* شريط التقدم */
         .progress-container {
             width: 80%;
             background: #444;
@@ -74,21 +72,17 @@
         .progress-bar {
             height: 100%;
             width: 0;
-            text-align: right;
-            line-height: 25px;
-            color: white;
             border-radius: 25px;
         }
 
-        /* ألوان مختلفة لكل شريط */
-        #progressBar1 { background: linear-gradient(90deg, #3498db, #3498db); }
-        #progressBar2 { background: linear-gradient(90deg, #3498db, #3498db); }
-        #progressBar3 { background: linear-gradient(90deg, #3498db, #3498db); }
-        #progressBar4 { background: linear-gradient(90deg, #3498db, #3498db); }
-        #progressBar5 { background: linear-gradient(90deg,  #3498db, #3498db); }
-        #progressBar6 { background: linear-gradient(90deg, #3498db, #3498db); }
-        #progressBar7 { background: linear-gradient(90deg, #3498db, #3498db); }
-        #progressBar8 { background: linear-gradient(90deg, #c0392b, #e74c3c); }
+        /* ألوان مختلفة */
+        #progressBar1, #progressBar2, #progressBar3,
+        #progressBar4, #progressBar5, #progressBar6, #progressBar7 {
+            background: linear-gradient(90deg, #3498db, #3498db);
+        }
+        #progressBar8 {
+            background: linear-gradient(90deg, #c0392b, #e74c3c);
+        }
 
         /* جدول */
         table {
@@ -98,8 +92,7 @@
             display: none;
         }
 
-        table th,
-        table td {
+        table th, table td {
             border: 1px solid #666;
             padding: 10px;
             text-align: center;
@@ -111,15 +104,18 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        input {
+            padding: 10px;
+            width: 80%;
+            max-width: 400px;
+            border: none;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -138,91 +134,55 @@
     <div id="news" class="page active">
         <h2> الأخبار</h2>
         <div class="post">
-            <h3>علان الاخبار </h3>
-            <p>تم اكتملت الاسماء والاضافه واهسه حاله التدقيق عتقد راح تنزل باجر الجمعه </p>
-        </div>
-    </div>
-     <h3> قرار رسمي  </h3>
-            <p>خلال ساعات نرفع اليكم البيانات </p>
+            <h3>إعلان</h3>
+            <p>تم اكتمال الأسماء والإضافة، وحالياً في مرحلة التدقيق. 👌</p>
         </div>
     </div>
 
     <!-- تفاصيل روليت -->
     <div id="roulette" class="page">
         <h2> تفاصيل روليت</h2>
-        <p> الباقات التي راح تفوز بيهه اذا كان اسمك بهاي باقه الي هوه
-            هاذه2-3-4-9-5-8-1-3-12-14-19-13-15-10-30-33-44-55-14-90-80-30</p>
+        <p> الباقات التي راح تفوز بيها إذا كان اسمك موجود:  
+            2,3,4,9,5,8,1,3,12,14,19,13,15,10,30,33,44,55,14,90,80,30
+        </p>
     </div>
 
     <!-- شريط التقدم -->
     <div id="progress" class="page">
         <h2>⏳ شريط التقدم</h2>
-
-        <h3>تم اكتملت: الاكتمال الاسماء</h3>
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar1"></div>
-        </div>
-
-        <h3>تم اكتملت: اضافه الاسماء</h3>
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar2"></div>
-        </div>
-
-        <h3>تم اكتملت: التدقيق</h3>
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar3"></div>
-        </div>
-
-        <h3>تم اكتملت: باقه</h3>
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar4"></div>
-        </div>
-
-        <h3>تم اكتملت: عملك</h3>
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar5"></div>
-        </div>
-
-        <h3>تم اكتملت: الاكتمال حالات</h3>
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar6"></div>
-        </div>
-
-        <h3>تم اكتملت: التدقيق</h3>
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar7"></div>
-        </div>
-
-        <h3>حالة: رفع البيانات</h3>
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar8"></div>
-        </div>
+        <h3>الاكتمال الاسماء</h3>
+        <div class="progress-container"><div class="progress-bar" id="progressBar1"></div></div>
+        <h3>اضافة الاسماء</h3>
+        <div class="progress-container"><div class="progress-bar" id="progressBar2"></div></div>
+        <h3>التدقيق</h3>
+        <div class="progress-container"><div class="progress-bar" id="progressBar3"></div></div>
+        <h3>باقه</h3>
+        <div class="progress-container"><div class="progress-bar" id="progressBar4"></div></div>
+        <h3>عملك</h3>
+        <div class="progress-container"><div class="progress-bar" id="progressBar5"></div></div>
+        <h3>الاكتمال حالات</h3>
+        <div class="progress-container"><div class="progress-bar" id="progressBar6"></div></div>
+        <h3>التدقيق</h3>
+        <div class="progress-container"><div class="progress-bar" id="progressBar7"></div></div>
+        <h3>رفع البيانات</h3>
+        <div class="progress-container"><div class="progress-bar" id="progressBar8"></div></div>
     </div>
 
     <!-- جدول البيانات -->
     <div id="table" class="page">
         <h2>📊 جدول البيانات</h2>
-        <!-- الجدول مخفي ولن يظهر حتى تكتمل البيانات -->
-        <table id="dataTable" style="display: none;">
+        <input type="text" id="rollInput" placeholder="اكتب رقم الرول للبحث...">
+
+        <table id="dataTable">
             <thead>
                 <tr>
-                    <th>الرقم</th>
                     <th>الاسم</th>
-                    <th>الحالة</th>
+                    <th>الباقة</th>
+                    <th>العمل</th>
+                    <th>رقم الرول</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>علي</td>
-                    <td>ناجح</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>أحمد</td>
-                    <td>مكمل</td>
-                </tr>
-            </tbody>
+            <tbody id="resultBody"></tbody>
         </table>
     </div>
 
@@ -257,12 +217,147 @@
             startProgress("progressBar7", 100);
             startProgress("progressBar8", 0);
         }
+
+        // بيانات البحث
+      const data = [
+      { name: "جعفر", roll: "847362947584739", package: "باقة 8", job: "1" },
+      { name: "امير", roll: "748573957483923", package: "باقة 5", job: "2" },
+      { name: "جاسم", roll: "749384758374659", package: "باقة 4", job: "3" },
+      { name: "حسن", roll: "847563957483754", package: "باقة 20", job: "4" },
+      { name: "زيد", roll: "657483756473645", package: "باقة 25", job: "5" },
+      { name: "فلاح", roll: "847638476593746", package: "باقة 6", job: "6" },
+      { name: "حمزه", roll: "645387564892736", package: "باقة 44", job: "7" },
+      { name: "غيث", roll: "746253484567365", package: "باقة 30", job: "8" },
+      { name: "ناصر", roll: "456376458376481", package: "باقة 50", job: "9" },
+      { name: "نزار", roll: "746386453826473", package: "باقة 90", job: "10" },
+      { name: "احمد", roll: "746358476548937", package: "باقة 55", job: "11" },
+      { name: "عمار", roll: "746358474635736", package: "باقة 30", job: "12" },
+      { name: "نبراس", roll: "4563738537373", package: "باقة 10", job: "13" },
+      { name: "حيدر", roll: "38364748372537", package: "باقة 19", job: "14" },
+      { name: "حسين", roll: "4637337354753", package: "باقة 18", job: "15" },
+      { name: "يوسف", roll: "8547567353746", package: "باقة 17", job: "16" },
+      { name: "علي", roll: "74638462767647", package: "باقة 16", job: "17" },
+      { name: "سامي", roll: "46376374674636", package: "باقة 16", job: "18" },
+      { name: "خالد", roll: "65736384637252", package: "باقة 16", job: "19" },
+      { name: "جابر", roll: "63528253824527", package: "باقة 20", job: "20" },
+      { name: "وسام", roll: "47453863090283", package: "باقة 12", job: "21" },
+      { name: "قحطان", roll: "38635340586300", package: "باقة 14", job: "22" },
+      { name: "سعد", roll: "37465836482529", package: "باقة 15", job: "23" },
+      { name: "علاء", roll: "473896384638282", package: "باقة 16", job: "24" },
+      { name: "ميثم", roll: "573628469446486", package: "باقة 17", job: "25" },
+      { name: "باسم", roll: "658563725384364", package: "باقة 14", job: "26" },
+      { name: "مصطفى", roll: "657483659284648", package: "باقة 5", job: "27" },
+      { name: "كرار", roll: "473868373982684", package: "باقة 80", job: "28" },
+      { name: "عباس", roll: "467884652573978", package: "باقة 8", job: "29" },
+      { name: "أديب", roll: "575746558756535", package: "باقة 14", job: "30" },
+      { name: "أيمن", roll: "364835293972573", package: "باقة 15", job: "31" },
+      { name: "بدر", roll: "473682683673763", package: "باقة 13", job: "32" },
+      { name: "تيم", roll: "446387258863762", package: "باقة 12", job: "33" },
+      { name: "تائر", roll: "746836884736838", package: "باقة 3", job: "34" },
+      { name: "جلال", roll: "484783847647635", package: "باقة 11", job: "35" },
+      { name: "حازم", roll: "485683685638648", package: "باقة 14", job: "36" },
+      { name: "خضير", roll: "473686483643836", package: "باقة 26", job: "37" },
+      { name: "ذيب", roll: "873748675645323", package: "باقة 25", job: "38" },
+      { name: "رامي", roll: "746489363094695", package: "باقة 33", job: "39" },
+      { name: "سلمان", roll: "487563964056836", package: "باقة 44", job: "40" },
+      { name: "شادي", roll: "485683680836848", package: "باقة 15", job: "41" },
+      { name: "صهيب", roll: "846857648648484", package: "باقة 12", job: "42" },
+      { name: "طه", roll: "484783789497597", package: "باقة 13", job: "43" },
+      { name: "علوي", roll: "485978564534365", package: "باقة 15", job: "44" },
+      { name: "فارس", roll: "378478397499484", package: "باقة 14", job: "45" },
+      { name: "قاسمون", roll: "374785026836846", package: "باقة 55", job: "46" },
+      { name: "لوى", roll: "483682794756473", package: "باقة 56", job: "47" },
+      { name: "نجم", roll: "756097948675282", package: "باقة 10", job: "48" },
+      { name: "هاني", roll: "634868345872652", package: "باقة 11", job: "49" },
+      { name: "وائل", roll: "249568246962582", package: "باقة 44", job: "50" },
+      { name: "يحيى", roll: "279278256726925", package: "باقة 30", job: "51" },
+      { name: "زياد", roll: "286286296825692", package: "باقة 31", job: "52" },
+      { name: "كريم", roll: "252969256836293", package: "باقة 32", job: "53" },
+      { name: "ليث", roll: "562858146926258", package: "باقة 33", job: "54" },
+      { name: "ماهر", roll: "259268526596428", package: "باقة 34", job: "55" },
+      { name: "اياد", roll: "569286926248526", package: "باقة 35", job: "56" },
+      { name: "جواد", roll: "286292628464916", package: "باقة 36", job: "57" },
+      { name: "حاتم", roll: "724962926424964", package: "باقة 37", job: "58" },
+      { name: "خالدون", roll: "292682624927624", package: "باقة 40", job: "59" },
+      { name: "سليمان", roll: "252562592562059", package: "باقة 41", job: "60" },
+      { name: "ضياء", roll: "229257259256259", package: "باقة 50", job: "61" },
+      { name: "عابد", roll: "225025972592578", package: "باقة 51", job: "62" },
+      { name: "فيصل", roll: "259526926258265", package: "باقة 52", job: "63" },
+      { name: "فهد", roll: "292294274025624", package: "باقة 53", job: "64" },
+      { name: "قيس", roll: "229795625957703", package: "باقة 54", job: "65" },
+      { name: "مازنون", roll: "575926259529202", package: "باقة 55", job: "66" },
+      { name: "هلال", roll: "258252702525879", package: "باقة 56", job: "67" },
+      { name: "هاشمون", roll: "291619530583054", package: "باقة 57", job: "68" },
+      { name: "وليد", roll: "35795494697307", package: "باقة 58", job: "69" },
+      { name: "ياسر", roll: "34379353563577", package: "باقة 59", job: "70" },
+      { name: "يزن", roll: "355292525826957", package: "60 1", job: "71" },
+      { name: "جمال", roll: "426262509257287", package: "باقة 70", job: "72" },
+      { name: "حبيب", roll: "357359356856282", package: "باقة 44", job: "73" },
+      { name: "اركان", roll: "259257925625979", package: "باقة 15", job: "74" },
+      { name: "مروان", roll: "525275025729257", package: "باقة 30", job: "75" },
+      { name: "ساري", roll: "520525702570725", package: "باقة 33", job: "76" },
+      { name: "صادق", roll: "39259257205725", package: "باقة 32", job: "77" },
+      { name: "ابراهيم", roll: "485920374659284", package: "باقة 35", job: "78" },
+      { name: "ليثون", roll: "294857203746582", package: "باقة 37", job: "79"},
+      { name: "نورس", roll: "584726394857203", package: "باقة 77", job: "80" },
+      { name: "ضياءون", roll: "738495028374659", package: "باقة 54", job: "81" },
+      { name: "جوادون", roll: "928374650283746", package: "باقة 20", job: "82" },
+      { name: "سرمد", roll: "374659203746592", package: "باقة 15", job: "83" },
+      { name: "ثامر", roll: "657483920374659", package: "باقة 32", job: "84" },
+      { name: "فؤاد", roll: "948572039485720", package: "باقة 41", job: "85" },
+      { name: "بدران", roll: "203746592837465", package: "34 باقه", job: "86" },
+      { name: "قصي", roll: "374659283746592", package: "باقة 44", job: "87" },
+      { name: "نصير", roll: "928374659203746", package: "باقة 44", job: "89" },
+      { name: "شاكر", roll: "203746592837465", package: "باقة 40", job: "مدرس" },
+      { name: "جليل", roll: "374659283746592", package: "باقة 30", job: "90" },
+      { name: "ولاء", roll: "928374659203746", package: "35 1", job: "91" },
+      { name: "ضياء", roll: "203746592837465", package: "باقة 54", job: "92" },
+      { name: "قحطانون", roll: "374659283746592", package: "56 1", job: "93" },
+      { name: "بهاء", roll: "928374659203746", package: "باقة 44", job: "94" },
+      { name: "ثائرون", roll: "203746592837465", package: "باقة 44", job: "95" },
+      { name: "رامون", roll: "374659283746592", package: "باقة 54", job: "96" },
+      { name: "علوان", roll: "928374659203746", package: "باقة 44", job: "97" },
+      { name: "صالح", roll: "203746592837465", package: "باقة 33", job: "98" },
+      { name: "نعمان", roll: "374659283746592", package: "33 1", job: "99  " },
+      { name: "كرامة", roll: "928374659203746", package: "44 2", job: "100" },
+      { name: "سلام", roll: "203746592837465", package: "باقة 55", job: "101" },
+      { name: "براء", roll: "374659283746592", package: "باقة 67", job: "102" },
+      { name: "جسام", roll: "928374659203746", package: "باقة 33", job: "103" },
+      { name: "هادي", roll: "203746592837465", package: "باقة 100", job: "104" },
+      { name: "ماهرون", roll: "374659283746592", package: "باقة 87", job: "105" },
+      { name: "احسان", roll: "928374659203746", package: "باقة 78", job: "106" },
+      { name: "طارق", roll: "203746592837465", package: "باقة 55", job: "107" }
+    ];
+        const input = document.getElementById("rollInput");
+        const table = document.getElementById("dataTable");
+        const tbody = document.getElementById("resultBody");
+
+        input.addEventListener("input", function () {
+            const query = input.value.trim();
+            tbody.innerHTML = "";
+
+            if (query === "") {
+                table.style.display = "none";
+                return;
+            }
+
+            const results = data.filter(item => item.roll.includes(query));
+
+            if (results.length > 0) {
+                results.forEach(item => {
+                    const row = `<tr>
+                        <td>${item.name}</td>
+                        <td>${item.package}</td>
+                        <td>${item.job}</td>
+                        <td>${item.roll}</td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+                table.style.display = "table";
+            } else {
+                table.style.display = "none";
+            }
+        });
     </script>
 </body>
-
 </html>
-
-
-
-
-
