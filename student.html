@@ -1,1 +1,167 @@
+<!DOCTYPE html>
+<html lang="ar">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قائمة الفايزين</title>
+    <style>
+        body {
+            font-family: 'Cairo', Tahoma, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #2c5364 100%);
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 50px 30px 50px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            position: relative;
+        }
+
+        .container:before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            border-radius: 50%;
+            filter: blur(18px);
+            opacity: 0.25;
+            z-index: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #11998e;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            position: relative;
+            z-index: 1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px #0002;
+        }
+
+        th,
+        td {
+            padding: 16px 12px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        th {
+            background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
+            color: #fff;
+            font-size: 1.15em;
+            border: none;
+        }
+
+        tr:nth-child(even) td {
+            background: #f2fdfb;
+        }
+
+        tr:nth-child(odd) td {
+            background: #e9f5ff;
+        }
+
+        td {
+            color: #222;
+            border: none;
+        }
+
+        #noData {
+            text-align: center;
+            color: #888;
+            font-size: 1.2em;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px 5px;
+            }
+
+            th,
+            td {
+                padding: 8px 4px;
+                font-size: 1em;
+            }
+
+            h2 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h2>قائمة المسجلين</h2>
+        <table id="entriesTable">
+            <thead>
+                <tr>
+                    <th>الاسم</th>
+                    <th>رقم روليت</th>
+                    <th>الباقة أو العمل</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- سيتم تعبئة البيانات هنا -->
+            </tbody>
+        </table>
+    <p id="noData" style="text-align:center; color:#888; display:none;">لا توجد بيانات مسجلة بعد.</p>
+    <button id="deleteAllBtn" style="margin:30px auto 0 auto;display:block;background:linear-gradient(90deg,#ff5858 0%,#f09819 100%);color:#fff;font-size:1.1em;padding:12px 35px;border:none;border-radius:8px;cursor:pointer;box-shadow:0 2px 8px #ff585822;transition:background 0.2s;">حذف الكل</button>
+    </div>
+    <script>
+        function loadEntries() {
+            var entries = JSON.parse(localStorage.getItem('entries') || '[]');
+            var tbody = document.querySelector('#entriesTable tbody');
+            var noData = document.getElementById('noData');
+            tbody.innerHTML = '';
+            if (entries.length === 0) {
+                noData.style.display = 'block';
+                document.getElementById('entriesTable').style.display = 'none';
+                document.getElementById('deleteAllBtn').style.display = 'none';
+            } else {
+                noData.style.display = 'none';
+                document.getElementById('entriesTable').style.display = 'table';
+                document.getElementById('deleteAllBtn').style.display = 'block';
+                entries.forEach(function (entry) {
+                    var row = document.createElement('tr');
+                    row.innerHTML = '<td>' + entry.name + '</td>' +
+                        '<td>' + entry.number + '</td>' +
+                        '<td>' + entry.pack + '</td>';
+                    tbody.appendChild(row);
+                });
+            }
+        }
+        document.getElementById('deleteAllBtn').onclick = function() {
+            if(confirm('هل أنت متأكد أنك تريد حذف جميع المسجلين؟')) {
+                localStorage.removeItem('entries');
+                loadEntries();
+            }
+        };
+        window.onload = loadEntries;
+    </script>
+</body>
+
+</html>
